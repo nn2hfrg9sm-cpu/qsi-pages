@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<style>
+  *, *::before, *::after { box-sizing: border-box; }
+  img { max-width: 100%; }
+  [hidden] { display: none !important; }
+  body { margin: 0; font-size: 14px; }
+</style>
+<title>QSI for Home Health</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap">
+
+<style>
+:root {
+  --bg:           #F4F5F8;
+  --surface:      #FFFFFF;
+  --surface-alt:  #ECEEF4;
+  --border:       #CDD2E0;
+  --text:         #1C2238;
+  --text-muted:   #5A627A;
+  --primary:      #2E3D7C;
+  --primary-dk:   #1E2B5E;
+  --primary-lt:   #E2E6F4;
+  --accent:       #BF7A20;
+  --accent-lt:    #FDF2E0;
+  --warm:         #8A3A52;
+  --warm-lt:      #F5E6EA;
+  --ph1: #2E3D7C;
+  --ph2: #3D5A8A;
+  --ph3: #8A3A52;
+  --ph4: #9A5F0A;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg:           #0D1020;
+    --surface:      #141828;
+    --surface-alt:  #1C2035;
+    --border:       #282E48;
+    --text:         #D8DBE8;
+    --text-muted:   #7880A0;
+    --primary:      #4A60C8;
+    --primary-dk:   #3548A8;
+    --primary-lt:   #0D1020;
+    --accent:       #D4901E;
+    --accent-lt:    #1F1408;
+    --warm:         #C0526A;
+    --warm-lt:      #200E14;
+    --ph1: #4A60C8;
+    --ph2: #5878B0;
+    --ph3: #C0526A;
+    --ph4: #C07818;
+  }
+}
+:root[data-theme="dark"] {
+  --bg:           #0D1020;
+  --surface:      #141828;
+  --surface-alt:  #1C2035;
+  --border:       #282E48;
+  --text:         #D8DBE8;
+  --text-muted:   #7880A0;
+  --primary:      #4A60C8;
+  --primary-dk:   #3548A8;
+  --primary-lt:   #0D1020;
+  --accent:       #D4901E;
+  --accent-lt:    #1F1408;
+  --warm:         #C0526A;
+  --warm-lt:      #200E14;
+  --ph1: #4A60C8;
+  --ph2: #5878B0;
+  --ph3: #C0526A;
+  --ph4: #C07818;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+body {
+  margin: 0;
+  padding-inline: 20px;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'DM Sans', system-ui, sans-serif;
+  font-size: 16px;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+img { max-width: 100%; }
+.wrap { max-width: 920px; margin-inline: auto; width: 100%; }
+h1,h2,h3 { text-wrap: balance; margin: 0; }
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 16px;
+}
+.eyebrow::before {
+  content: '';
+  display: block;
+  width: 28px;
+  height: 2px;
+  background: var(--accent);
+  flex-shrink: 0;
+}
+
+.site-header {
+  padding-block: 18px;
+  border-bottom: 1px solid var(--border);
+  background: var(--surface);
+}
+.site-header .wrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+.logo {
+  font-family: 'DM Serif Display', serif;
+  font-size: 1.2rem;
+  color: var(--primary);
+  text-decoration: none;
+}
+.logo strong { color: var(--accent); font-weight: 400; }
+.logo img {
+  display: block;
+  mix-blend-mode: multiply;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .logo img {
+    mix-blend-mode: normal;
+    filter: brightness(0) invert(1);
+  }
+}
+:root[data-theme="dark"] .logo img {
+  mix-blend-mode: normal;
+  filter: brightness(0) invert(1);
+}
+.header-badge {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--primary);
+  border: 1.5px solid var(--primary);
+  padding: 4px 10px;
+  border-radius: 20px;
+  background: var(--primary-lt);
+}
+
+.hero {
+  padding-block: 68px 56px;
+  border-bottom: 1px solid var(--border);
+}
+.hero h1 {
+  font-family: 'DM Serif Display', Georgia, serif;
+  font-size: clamp(2rem, 4.5vw, 3rem);
+  line-height: 1.18;
+  color: var(--text);
+  margin-bottom: 18px;
+  max-width: 640px;
+}
+.hero h1 em { font-style: italic; color: var(--primary); }
+.hero-sub {
+  font-size: 1rem;
+  color: var(--text-muted);
+  max-width: 520px;
+  margin-bottom: 36px;
+  line-height: 1.7;
+}
+.hero-actions { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; }
+.btn-primary {
+  background: var(--accent);
+  color: #fff;
+  padding: 13px 28px;
+  border-radius: 7px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  text-decoration: none;
+  transition: opacity 0.15s;
+}
+.btn-primary:hover { opacity: 0.88; }
+.btn-ghost {
+  font-size: 0.9rem;
+  color: var(--primary);
+  font-weight: 500;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.btn-ghost::after { content: '→'; }
+
+section { padding-block: 60px; }
+section + section { padding-top: 0; }
+.section-title {
+  font-family: 'DM Serif Display', serif;
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  color: var(--text);
+  margin-bottom: 8px;
+}
+.section-sub {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  max-width: 500px;
+  margin-bottom: 36px;
+}
+
+/* Pain cards */
+.pain-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 16px;
+}
+.pain-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 22px;
+}
+.pain-card h3 { font-size: 0.9rem; font-weight: 600; margin-bottom: 6px; }
+.pain-card p { font-size: 0.82rem; color: var(--text-muted); margin: 0; line-height: 1.55; }
+.pain-icon { font-size: 1.35rem; margin-bottom: 10px; display: block; }
+
+/* Phase matrix */
+.matrix-wrap {
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  overflow-x: auto;
+}
+.matrix {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  min-width: 580px;
+}
+.phase-col { display: flex; flex-direction: column; }
+.phase-col + .phase-col { border-left: 1px solid var(--border); }
+.phase-header {
+  padding: 14px 18px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: #fff;
+  line-height: 1.3;
+}
+.phase-header small {
+  display: block;
+  opacity: 0.7;
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: 0;
+  font-size: 0.72rem;
+  margin-top: 2px;
+}
+.ph1 .phase-header { background: var(--ph1); }
+.ph2 .phase-header { background: var(--ph2); }
+.ph3 .phase-header { background: var(--ph3); }
+.ph4 .phase-header { background: var(--ph4); }
+.phase-body {
+  background: var(--surface);
+  padding: 18px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+.phase-item {
+  font-size: 0.82rem;
+  color: var(--text);
+  display: flex;
+  align-items: flex-start;
+  gap: 7px;
+  line-height: 1.4;
+}
+.phase-dot {
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  margin-top: 5px;
+}
+.ph1 .phase-dot { background: var(--ph1); }
+.ph2 .phase-dot { background: var(--ph2); }
+.ph3 .phase-dot { background: var(--ph3); }
+.ph4 .phase-dot { background: var(--ph4); }
+
+/* Care settings */
+.settings-section {
+  background: var(--surface-alt);
+  border-block: 1px solid var(--border);
+}
+.settings-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 16px;
+}
+.setting-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 22px;
+  position: relative;
+  overflow: hidden;
+}
+.setting-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+}
+.setting-card.home::before { background: var(--ph1); }
+.setting-card.palliative::before { background: var(--ph3); }
+.setting-card.pharmacy::before { background: var(--ph4); }
+.setting-card.skilled::before { background: var(--ph2); }
+
+.setting-label {
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+}
+.setting-card h3 { font-size: 0.9rem; font-weight: 600; margin-bottom: 6px; color: var(--text); }
+.setting-card p { font-size: 0.82rem; color: var(--text-muted); margin: 0; line-height: 1.5; }
+
+/* Why QSI */
+.diff-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+}
+.diff-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 22px;
+}
+.diff-n {
+  font-family: 'DM Serif Display', serif;
+  font-size: 2.2rem;
+  color: var(--border);
+  line-height: 1;
+  margin-bottom: 10px;
+  font-variant-numeric: tabular-nums;
+}
+.diff-card h3 { font-size: 0.9rem; font-weight: 600; margin-bottom: 6px; color: var(--text); }
+.diff-card p { font-size: 0.82rem; color: var(--text-muted); margin: 0; line-height: 1.55; }
+
+/* Compliance callout */
+.compliance-callout {
+  margin-top: 24px;
+  background: var(--primary);
+  border-radius: 12px;
+  padding: 28px 32px;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 20px;
+  align-items: start;
+}
+.comp-icon {
+  width: 48px; height: 48px;
+  border-radius: 10px;
+  background: rgba(255,255,255,0.12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  flex-shrink: 0;
+}
+.compliance-callout h3 {
+  font-family: 'DM Serif Display', serif;
+  font-size: 1.15rem;
+  color: #fff;
+  margin-bottom: 6px;
+}
+.compliance-callout p {
+  font-size: 0.875rem;
+  color: rgba(255,255,255,0.75);
+  margin: 0;
+  line-height: 1.6;
+}
+
+/* CTA */
+.cta-section {
+  text-align: center;
+  padding-block: 72px;
+}
+.cta-section h2 {
+  font-family: 'DM Serif Display', serif;
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+  margin-bottom: 12px;
+}
+.cta-section p {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  max-width: 420px;
+  margin-inline: auto;
+  margin-bottom: 32px;
+}
+.cta-note {
+  display: block;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  margin-top: 14px;
+}
+
+footer {
+  border-top: 1px solid var(--border);
+  padding-block: 28px;
+  background: var(--surface);
+}
+.footer-inner {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+.footer-info { font-size: 0.78rem; color: var(--text-muted); line-height: 1.8; }
+.footer-info strong { display: block; color: var(--text); font-size: 0.85rem; margin-bottom: 2px; }
+.badges { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; }
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 5px 12px;
+  border-radius: 20px;
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  background: var(--surface-alt);
+}
+.badge-hipaa { color: var(--primary); background: var(--primary-lt); border-color: var(--primary); }
+
+@media (max-width: 600px) {
+  .compliance-callout { grid-template-columns: 1fr; }
+  .comp-icon { display: none; }
+  .footer-inner { flex-direction: column; }
+  .badges { align-items: flex-start; }
+}
+</style>
+
+<header class="site-header">
+  <div class="wrap">
+    <a href="https://qualtsolutions.com" class="logo"><img src="data:image/png;base64,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" alt="QualT Solutions" style="height:38px;display:block;"></a>
+    <span class="header-badge">HIPAA · BAA Ready</span>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <div class="eyebrow">Home Health &amp; Palliative Care</div>
+    <h1 class="serif">Care that travels.<br><em>Revenue that follows.</em></h1>
+    <p class="hero-sub">
+      QualT Solutions provides specialized billing, authorization management, and back-office support for home health agencies, hospice programs, and palliative care providers — handling the administrative complexity so your clinicians can stay focused on patients.
+    </p>
+    <div class="hero-actions">
+      <a href="mailto:sales@qualtsolutions.com" class="btn-primary">Request a Free Billing Audit</a>
+      <a href="https://qualtsolutions.com" class="btn-ghost">View all services</a>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="eyebrow">The challenge</div>
+    <h2 class="section-title serif">Home-based care carries unique billing burdens</h2>
+    <p class="section-sub">Medicare, Medicaid, and managed care payers each apply different rules to home and community-based services — and the documentation requirements are unforgiving.</p>
+
+    <div class="pain-grid">
+      <div class="pain-card">
+        <span class="pain-icon">📄</span>
+        <h3>Medicare Documentation Requirements</h3>
+        <p>Home health billing under PDGM requires precise coding, face-to-face documentation, and OASIS accuracy — errors anywhere in the chain trigger denials.</p>
+      </div>
+      <div class="pain-card">
+        <span class="pain-icon">✅</span>
+        <h3>Prior Auth for Home Services</h3>
+        <p>Authorization for skilled nursing, PT, OT, and home health aide services must be in place before a visit occurs — and expiration tracking is a constant risk.</p>
+      </div>
+      <div class="pain-card">
+        <span class="pain-icon">🔄</span>
+        <h3>Hospice Billing Complexity</h3>
+        <p>Hospice claims require precise election periods, level-of-care distinctions, and physician certifications — each a potential denial point.</p>
+      </div>
+      <div class="pain-card">
+        <span class="pain-icon">🧑‍💼</span>
+        <h3>Back-Office Staffing Gaps</h3>
+        <p>Home health agencies typically have lean administrative teams. Eligibility, authorizations, and AR follow-up compete for the same limited hours.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section style="padding-top:0;">
+  <div class="wrap">
+    <div class="eyebrow">What we handle</div>
+    <h2 class="section-title serif">End-to-end support for the home care revenue cycle</h2>
+    <p class="section-sub">We manage the entire administrative workflow — from the intake call to the final remittance — so your team can spend their time on care.</p>
+
+    <div class="matrix-wrap">
+      <div class="matrix">
+        <div class="phase-col ph1">
+          <div class="phase-header">Patient Intake<small>Before the first visit</small></div>
+          <div class="phase-body">
+            <div class="phase-item"><span class="phase-dot"></span>Eligibility verification</div>
+            <div class="phase-item"><span class="phase-dot"></span>Prior authorization</div>
+            <div class="phase-item"><span class="phase-dot"></span>Referral intake &amp; management</div>
+            <div class="phase-item"><span class="phase-dot"></span>Physician order coordination</div>
+            <div class="phase-item"><span class="phase-dot"></span>Payer credentialing</div>
+          </div>
+        </div>
+        <div class="phase-col ph2">
+          <div class="phase-header">Active Care<small>During the episode</small></div>
+          <div class="phase-body">
+            <div class="phase-item"><span class="phase-dot"></span>Visit &amp; encounter documentation</div>
+            <div class="phase-item"><span class="phase-dot"></span>OASIS coding support</div>
+            <div class="phase-item"><span class="phase-dot"></span>Auth expiration tracking</div>
+            <div class="phase-item"><span class="phase-dot"></span>Utilization management</div>
+            <div class="phase-item"><span class="phase-dot"></span>Clinical documentation review</div>
+          </div>
+        </div>
+        <div class="phase-col ph3">
+          <div class="phase-header">Billing &amp; Collections<small>Episode close &amp; payment</small></div>
+          <div class="phase-body">
+            <div class="phase-item"><span class="phase-dot"></span>Claim submission &amp; billing</div>
+            <div class="phase-item"><span class="phase-dot"></span>RAP &amp; final claim processing</div>
+            <div class="phase-item"><span class="phase-dot"></span>Denial management &amp; appeals</div>
+            <div class="phase-item"><span class="phase-dot"></span>Remittance processing</div>
+            <div class="phase-item"><span class="phase-dot"></span>Patient &amp; family billing</div>
+          </div>
+        </div>
+        <div class="phase-col ph4">
+          <div class="phase-header">Ongoing Operations<small>Compliance &amp; performance</small></div>
+          <div class="phase-body">
+            <div class="phase-item"><span class="phase-dot"></span>AR follow-up &amp; audit</div>
+            <div class="phase-item"><span class="phase-dot"></span>Coding audit &amp; QA</div>
+            <div class="phase-item"><span class="phase-dot"></span>Performance analytics</div>
+            <div class="phase-item"><span class="phase-dot"></span>HEDIS &amp; payer reporting</div>
+            <div class="phase-item"><span class="phase-dot"></span>Help desk &amp; IT support</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="compliance-callout">
+      <div class="comp-icon">🏠</div>
+      <div>
+        <h3>Pharmacy &amp; DME billing included</h3>
+        <p>Many home health patients also require pharmacy management and durable medical equipment — QSI handles billing and authorization for pharmacy and DME alongside your home health claims, eliminating the gap between care delivery and reimbursement.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="settings-section">
+  <div class="wrap">
+    <div class="eyebrow">Care settings we serve</div>
+    <h2 class="section-title serif">Across the full continuum of home-based care</h2>
+    <p class="section-sub">Whether you're a Medicare-certified home health agency, a hospice program, or a private-pay palliative care provider, QSI's team knows your billing environment.</p>
+
+    <div class="settings-grid">
+      <div class="setting-card home">
+        <div class="setting-label">Skilled Care</div>
+        <h3>Home Health Agencies</h3>
+        <p>Medicare-certified agencies billing under PDGM — skilled nursing, PT, OT, SLP, and home health aide services. Full episode management.</p>
+      </div>
+      <div class="setting-card palliative">
+        <div class="setting-label">End-of-Life Care</div>
+        <h3>Hospice &amp; Palliative Care</h3>
+        <p>Hospice benefit billing, election period management, physician certifications, and IDT documentation — handled with the sensitivity these services deserve.</p>
+      </div>
+      <div class="setting-card pharmacy">
+        <div class="setting-label">Supplies &amp; Equipment</div>
+        <h3>Pharmacy &amp; DME Providers</h3>
+        <p>Authorization and billing for home infusion, pharmacy, and durable medical equipment — including prior auth, delivery documentation, and payer follow-up.</p>
+      </div>
+      <div class="setting-card skilled">
+        <div class="setting-label">Community Care</div>
+        <h3>Private Duty &amp; HCBS</h3>
+        <p>Home and community-based services billing under Medicaid managed care — waiver programs, personal care, and non-medical home services.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="eyebrow">Why QualT Solutions</div>
+    <h2 class="section-title serif">A partner who understands home-based care billing</h2>
+    <p class="section-sub">Most RCM firms treat home health as an afterthought. We built specialized workflows for it.</p>
+
+    <div class="diff-grid">
+      <div class="diff-card">
+        <div class="diff-n">01</div>
+        <h3>Home Health Coding Specialists</h3>
+        <p>Certified coders with experience in PDGM, OASIS-E, and hospice billing — not generalists learning your claims on your dime.</p>
+      </div>
+      <div class="diff-card">
+        <div class="diff-n">02</div>
+        <h3>Virtual Back Office, Fully Managed</h3>
+        <p>Eligibility, prior auth, referral management, and visit authorization tracking — handled by a dedicated team so your clinical coordinators don't become billing coordinators.</p>
+      </div>
+      <div class="diff-card">
+        <div class="diff-n">03</div>
+        <h3>AI-Assisted Documentation Review</h3>
+        <p>Our AI tools flag documentation gaps before claims are submitted — catching OASIS inconsistencies, missing physician signatures, and auth lapses upstream of denial.</p>
+      </div>
+      <div class="diff-card">
+        <div class="diff-n">04</div>
+        <h3>HIPAA Compliant, BAA Ready</h3>
+        <p>We operate as your Business Associate. All workflows built to HIPAA standards, with HL7 integration, audit logging, and role-based access controls.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-section">
+  <div class="wrap">
+    <h2 class="serif">See where your home health revenue is slipping.</h2>
+    <p>We'll audit your current billing, denial rates, and authorization workflow — and show you exactly where revenue is being left on the table.</p>
+    <a href="mailto:sales@qualtsolutions.com" class="btn-primary">Request a Free Billing Audit</a>
+    <span class="cta-note">No commitment. Typically completed within 5–7 business days.</span>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-inner">
+      <div class="footer-info">
+        <strong>QualT Solutions Inc.</strong>
+        <a href="https://qualtsolutions.com" style="color:inherit;">qualtsolutions.com</a> &nbsp;·&nbsp; <a href="mailto:sales@qualtsolutions.com" style="color:inherit;">sales@qualtsolutions.com</a><br>
+        © 2026 QualT Solutions Inc. All rights reserved.
+      </div>
+      <div class="badges">
+        <span class="badge badge-hipaa">🔒 HIPAA Compliant</span>
+        <span class="badge">Business Associate (BAA)</span>
+        <span class="badge">HL7 Standards</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

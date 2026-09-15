@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<style>
+  *, *::before, *::after { box-sizing: border-box; }
+  img { max-width: 100%; }
+  [hidden] { display: none !important; }
+  body { margin: 0; font-size: 14px; }
+</style>
+<title>QSI for Physician Groups</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap">
+
+<style>
+:root {
+  --bg:           #F3F7F4;
+  --surface:      #FFFFFF;
+  --surface-alt:  #EAF1EC;
+  --border:       #C8DAC9;
+  --text:         #182820;
+  --text-muted:   #527058;
+  --primary:      #235232;
+  --primary-dk:   #163A22;
+  --primary-lt:   #DDF0E1;
+  --accent:       #BF7A20;
+  --accent-lt:    #FDF2E0;
+  --ph1: #235232;
+  --ph2: #2C6B42;
+  --ph3: #1E5068;
+  --ph4: #9A5F0A;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg:           #0B160D;
+    --surface:      #111E14;
+    --surface-alt:  #172A1A;
+    --border:       #243D28;
+    --text:         #D8EADA;
+    --text-muted:   #6A9070;
+    --primary:      #2E8A48;
+    --primary-dk:   #237039;
+    --primary-lt:   #0B160D;
+    --accent:       #D4901E;
+    --accent-lt:    #1F1408;
+    --ph1: #2E8A48;
+    --ph2: #38A058;
+    --ph3: #2A7898;
+    --ph4: #C07818;
+  }
+}
+:root[data-theme="dark"] {
+  --bg:           #0B160D;
+  --surface:      #111E14;
+  --surface-alt:  #172A1A;
+  --border:       #243D28;
+  --text:         #D8EADA;
+  --text-muted:   #6A9070;
+  --primary:      #2E8A48;
+  --primary-dk:   #237039;
+  --primary-lt:   #0B160D;
+  --accent:       #D4901E;
+  --accent-lt:    #1F1408;
+  --ph1: #2E8A48;
+  --ph2: #38A058;
+  --ph3: #2A7898;
+  --ph4: #C07818;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+body {
+  margin: 0;
+  padding-inline: 20px;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'DM Sans', system-ui, sans-serif;
+  font-size: 16px;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+img { max-width: 100%; }
+.wrap { max-width: 920px; margin-inline: auto; width: 100%; }
+h1,h2,h3 { text-wrap: balance; margin: 0; }
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 16px;
+}
+.eyebrow::before {
+  content: '';
+  display: block;
+  width: 28px;
+  height: 2px;
+  background: var(--accent);
+  flex-shrink: 0;
+}
+
+.site-header {
+  padding-block: 18px;
+  border-bottom: 1px solid var(--border);
+  background: var(--surface);
+}
+.site-header .wrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+.logo {
+  font-family: 'DM Serif Display', serif;
+  font-size: 1.2rem;
+  color: var(--primary);
+  text-decoration: none;
+}
+.logo strong { color: var(--accent); font-weight: 400; }
+.logo img {
+  display: block;
+  mix-blend-mode: multiply;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .logo img {
+    mix-blend-mode: normal;
+    filter: brightness(0) invert(1);
+  }
+}
+:root[data-theme="dark"] .logo img {
+  mix-blend-mode: normal;
+  filter: brightness(0) invert(1);
+}
+.header-badge {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--primary);
+  border: 1.5px solid var(--primary);
+  padding: 4px 10px;
+  border-radius: 20px;
+  background: var(--primary-lt);
+}
+
+.hero {
+  padding-block: 68px 56px;
+  border-bottom: 1px solid var(--border);
+}
+.hero h1 {
+  font-family: 'DM Serif Display', Georgia, serif;
+  font-size: clamp(2rem, 4.5vw, 3rem);
+  line-height: 1.18;
+  color: var(--text);
+  margin-bottom: 18px;
+  max-width: 640px;
+}
+.hero h1 em { font-style: italic; color: var(--primary); }
+.hero-sub {
+  font-size: 1rem;
+  color: var(--text-muted);
+  max-width: 520px;
+  margin-bottom: 36px;
+  line-height: 1.7;
+}
+.hero-actions { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; }
+.btn-primary {
+  background: var(--accent);
+  color: #fff;
+  padding: 13px 28px;
+  border-radius: 7px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  text-decoration: none;
+  transition: opacity 0.15s;
+}
+.btn-primary:hover { opacity: 0.88; }
+.btn-ghost {
+  font-size: 0.9rem;
+  color: var(--primary);
+  font-weight: 500;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.btn-ghost::after { content: '→'; }
+
+section { padding-block: 60px; }
+section + section { padding-top: 0; }
+.section-title {
+  font-family: 'DM Serif Display', serif;
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  color: var(--text);
+  margin-bottom: 8px;
+}
+.section-sub {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  max-width: 500px;
+  margin-bottom: 36px;
+}
+
+/* Pain cards */
+.pain-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+}
+.pain-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 22px;
+}
+.pain-card h3 { font-size: 0.9rem; font-weight: 600; margin-bottom: 6px; }
+.pain-card p { font-size: 0.82rem; color: var(--text-muted); margin: 0; line-height: 1.55; }
+.pain-icon { font-size: 1.35rem; margin-bottom: 10px; display: block; }
+
+/* Phase matrix */
+.matrix-wrap {
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  overflow-x: auto;
+}
+.matrix {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  min-width: 580px;
+}
+.phase-col { display: flex; flex-direction: column; }
+.phase-col + .phase-col { border-left: 1px solid var(--border); }
+.phase-header {
+  padding: 14px 18px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: #fff;
+  line-height: 1.3;
+}
+.phase-header small {
+  display: block;
+  opacity: 0.7;
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: 0;
+  font-size: 0.72rem;
+  margin-top: 2px;
+}
+.ph1 .phase-header { background: var(--ph1); }
+.ph2 .phase-header { background: var(--ph2); }
+.ph3 .phase-header { background: var(--ph3); }
+.ph4 .phase-header { background: var(--ph4); }
+.phase-body {
+  background: var(--surface);
+  padding: 18px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+.phase-item {
+  font-size: 0.82rem;
+  color: var(--text);
+  display: flex;
+  align-items: flex-start;
+  gap: 7px;
+  line-height: 1.4;
+}
+.phase-dot {
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  margin-top: 5px;
+}
+.ph1 .phase-dot { background: var(--ph1); }
+.ph2 .phase-dot { background: var(--ph2); }
+.ph3 .phase-dot { background: var(--ph3); }
+.ph4 .phase-dot { background: var(--ph4); }
+
+/* Integrated advantage */
+.advantage-section {
+  background: var(--surface-alt);
+  border-block: 1px solid var(--border);
+}
+.advantage-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+}
+.adv-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 22px;
+}
+.adv-n {
+  font-family: 'DM Serif Display', serif;
+  font-size: 2.2rem;
+  color: var(--border);
+  line-height: 1;
+  margin-bottom: 10px;
+  font-variant-numeric: tabular-nums;
+}
+.adv-card h3 { font-size: 0.9rem; font-weight: 600; margin-bottom: 6px; color: var(--text); }
+.adv-card p { font-size: 0.82rem; color: var(--text-muted); margin: 0; line-height: 1.55; }
+
+/* IT Callout */
+.it-callout {
+  margin-top: 24px;
+  background: var(--primary);
+  border-radius: 12px;
+  padding: 28px 32px;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 20px;
+  align-items: start;
+}
+.it-icon {
+  width: 48px; height: 48px;
+  border-radius: 10px;
+  background: rgba(255,255,255,0.12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  flex-shrink: 0;
+}
+.it-callout h3 {
+  font-family: 'DM Serif Display', serif;
+  font-size: 1.15rem;
+  color: #fff;
+  margin-bottom: 6px;
+}
+.it-callout p {
+  font-size: 0.875rem;
+  color: rgba(255,255,255,0.75);
+  margin: 0;
+  line-height: 1.6;
+}
+
+/* Specialties */
+.spec-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 20px;
+}
+.spec-chip {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 5px 14px;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+/* CTA */
+.cta-section {
+  text-align: center;
+  padding-block: 72px;
+}
+.cta-section h2 {
+  font-family: 'DM Serif Display', serif;
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+  margin-bottom: 12px;
+}
+.cta-section p {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  max-width: 420px;
+  margin-inline: auto;
+  margin-bottom: 32px;
+}
+.cta-note {
+  display: block;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  margin-top: 14px;
+}
+
+footer {
+  border-top: 1px solid var(--border);
+  padding-block: 28px;
+  background: var(--surface);
+}
+.footer-inner {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+.footer-info { font-size: 0.78rem; color: var(--text-muted); line-height: 1.8; }
+.footer-info strong { display: block; color: var(--text); font-size: 0.85rem; margin-bottom: 2px; }
+.badges { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; }
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  padding: 5px 12px;
+  border-radius: 20px;
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  background: var(--surface-alt);
+}
+.badge-hipaa { color: var(--primary); background: var(--primary-lt); border-color: var(--primary); }
+
+@media (max-width: 600px) {
+  .it-callout { grid-template-columns: 1fr; }
+  .it-icon { display: none; }
+  .footer-inner { flex-direction: column; }
+  .badges { align-items: flex-start; }
+}
+</style>
+
+<header class="site-header">
+  <div class="wrap">
+    <a href="https://qualtsolutions.com" class="logo"><img src="data:image/png;base64,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" alt="QualT Solutions" style="height:38px;display:block;"></a>
+    <span class="header-badge">HIPAA · BAA Ready</span>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <div class="eyebrow">Physician Groups &amp; Multi-Specialty Practices</div>
+    <h1 class="serif">Run a tighter practice.<br><em>Grow a healthier one.</em></h1>
+    <p class="hero-sub">
+      QualT Solutions gives physician groups a single, accountable partner for revenue cycle management, coding, credentialing, analytics, and IT — so your administrative operations run as precisely as your clinical ones.
+    </p>
+    <div class="hero-actions">
+      <a href="mailto:sales@qualtsolutions.com" class="btn-primary">Request a Revenue Assessment</a>
+      <a href="https://qualtsolutions.com" class="btn-ghost">View all services</a>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="eyebrow">The challenge</div>
+    <h2 class="section-title serif">Growing practices face compounding complexity</h2>
+    <p class="section-sub">More providers, more payers, more specialties — without the back-office infrastructure to match.</p>
+
+    <div class="pain-grid">
+      <div class="pain-card">
+        <span class="pain-icon">📋</span>
+        <h3>Credentialing Delays</h3>
+        <p>A new provider not credentialed means every claim they generate goes unbilled — costing practices weeks of revenue per hire.</p>
+      </div>
+      <div class="pain-card">
+        <span class="pain-icon">🔢</span>
+        <h3>Multi-Specialty Billing Rules</h3>
+        <p>Each specialty carries its own coding requirements, payer contracts, and modifier logic — impossible to manage with a generalist billing team.</p>
+      </div>
+      <div class="pain-card">
+        <span class="pain-icon">📈</span>
+        <h3>AR Aging &amp; Denial Backlog</h3>
+        <p>Without a dedicated appeals team, denied claims age out. Even a modest denial rate compounds into significant uncollected revenue.</p>
+      </div>
+      <div class="pain-card">
+        <span class="pain-icon">🖥️</span>
+        <h3>IT Without a Strategy</h3>
+        <p>Practices cobble together EHRs, billing software, and helpdesk support from different vendors — with no one owning the full picture.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section style="padding-top:0;">
+  <div class="wrap">
+    <div class="eyebrow">What we handle</div>
+    <h2 class="section-title serif">Integrated support across every operational layer</h2>
+    <p class="section-sub">From the moment a new provider joins to the final dollar collected — and everything that keeps the practice running in between.</p>
+
+    <div class="matrix-wrap">
+      <div class="matrix">
+        <div class="phase-col ph1">
+          <div class="phase-header">Provider Setup<small>Credentialing &amp; onboarding</small></div>
+          <div class="phase-body">
+            <div class="phase-item"><span class="phase-dot"></span>Credentialing &amp; re-credentialing</div>
+            <div class="phase-item"><span class="phase-dot"></span>Payer enrollment</div>
+            <div class="phase-item"><span class="phase-dot"></span>Schedule setup &amp; reconciliation</div>
+            <div class="phase-item"><span class="phase-dot"></span>Referral network setup</div>
+            <div class="phase-item"><span class="phase-dot"></span>Authorization workflows</div>
+          </div>
+        </div>
+        <div class="phase-col ph2">
+          <div class="phase-header">Daily Operations<small>Coding &amp; charge capture</small></div>
+          <div class="phase-body">
+            <div class="phase-item"><span class="phase-dot"></span>QualT Charge Capture</div>
+            <div class="phase-item"><span class="phase-dot"></span>Outpatient &amp; inpatient coding</div>
+            <div class="phase-item"><span class="phase-dot"></span>Clinical documentation review</div>
+            <div class="phase-item"><span class="phase-dot"></span>Eligibility verification</div>
+            <div class="phase-item"><span class="phase-dot"></span>Utilization management</div>
+          </div>
+        </div>
+        <div class="phase-col ph3">
+          <div class="phase-header">Revenue Recovery<small>Billing &amp; collections</small></div>
+          <div class="phase-body">
+            <div class="phase-item"><span class="phase-dot"></span>Claim submission &amp; billing</div>
+            <div class="phase-item"><span class="phase-dot"></span>Denial management &amp; appeals</div>
+            <div class="phase-item"><span class="phase-dot"></span>Remittance processing</div>
+            <div class="phase-item"><span class="phase-dot"></span>AR follow-up &amp; audit</div>
+            <div class="phase-item"><span class="phase-dot"></span>Patient collections</div>
+          </div>
+        </div>
+        <div class="phase-col ph4">
+          <div class="phase-header">Practice Intelligence<small>Analytics &amp; IT</small></div>
+          <div class="phase-body">
+            <div class="phase-item"><span class="phase-dot"></span>Performance dashboards</div>
+            <div class="phase-item"><span class="phase-dot"></span>Payer contract analytics</div>
+            <div class="phase-item"><span class="phase-dot"></span>Coding audit &amp; QA</div>
+            <div class="phase-item"><span class="phase-dot"></span>Help desk &amp; IT support</div>
+            <div class="phase-item"><span class="phase-dot"></span>Network &amp; security mgmt</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="it-callout">
+      <div class="it-icon">💻</div>
+      <div>
+        <h3>Revenue Cycle + IT. One partner.</h3>
+        <p>Unlike traditional RCM firms, QSI also manages your technology layer — help desk staffing, desktop support, network management, and IT security. One contract, one point of contact, no coordination overhead between your billing team and your IT vendor.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="advantage-section">
+  <div class="wrap">
+    <div class="eyebrow">Why QualT Solutions</div>
+    <h2 class="section-title serif">The integrated advantage</h2>
+    <p class="section-sub">What separates QSI from a standard billing company is the depth and integration of services across your entire operation.</p>
+
+    <div class="advantage-grid">
+      <div class="adv-card">
+        <div class="adv-n">01</div>
+        <h3>Specialty-Specific Coders</h3>
+        <p>Certified coders assigned by specialty — not generalists rotating across accounts. Your internal medicine and GI claims are handled by coders who know those payer rules cold.</p>
+      </div>
+      <div class="adv-card">
+        <div class="adv-n">02</div>
+        <h3>AI-Powered Analytics</h3>
+        <p>A real-time performance dashboard for your practice — denial patterns, payer mix, provider-level productivity, and AR aging — built on data science, not spreadsheets.</p>
+      </div>
+      <div class="adv-card">
+        <div class="adv-n">03</div>
+        <h3>Custom Tech, Yours to Own</h3>
+        <p>QSI can build or configure tailored claims processing and patient communication software — and you own your data. No vendor lock-in.</p>
+      </div>
+      <div class="adv-card">
+        <div class="adv-n">04</div>
+        <h3>HIPAA Compliant, BAA Ready</h3>
+        <p>We operate as your Business Associate. End-to-end compliance, audit trails, and HL7 standards built into every workflow.</p>
+      </div>
+    </div>
+
+    <div>
+      <p style="font-size:0.82rem; color:var(--text-muted); margin-top:28px; margin-bottom:8px; font-weight:500;">Specialties we support:</p>
+      <div class="spec-list">
+        <span class="spec-chip">Internal Medicine</span>
+        <span class="spec-chip">Family Practice</span>
+        <span class="spec-chip">Gastroenterology</span>
+        <span class="spec-chip">Cardiology</span>
+        <span class="spec-chip">Orthopedics</span>
+        <span class="spec-chip">Neurology</span>
+        <span class="spec-chip">Oncology</span>
+        <span class="spec-chip">Dermatology</span>
+        <span class="spec-chip">OB/GYN</span>
+        <span class="spec-chip">Urgent Care</span>
+        <span class="spec-chip">Rheumatology</span>
+        <span class="spec-chip">Psychiatry</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-section">
+  <div class="wrap">
+    <h2 class="serif">Know exactly where your revenue stands.</h2>
+    <p>We'll assess your current RCM performance — denial rates, AR aging, coding accuracy — and show you a clear path to improvement.</p>
+    <a href="mailto:sales@qualtsolutions.com" class="btn-primary">Request a Free Assessment</a>
+    <span class="cta-note">No commitment. Typically delivered within one week.</span>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-inner">
+      <div class="footer-info">
+        <strong>QualT Solutions Inc.</strong>
+        <a href="https://qualtsolutions.com" style="color:inherit;">qualtsolutions.com</a> &nbsp;·&nbsp; <a href="mailto:sales@qualtsolutions.com" style="color:inherit;">sales@qualtsolutions.com</a><br>
+        © 2026 QualT Solutions Inc. All rights reserved.
+      </div>
+      <div class="badges">
+        <span class="badge badge-hipaa">🔒 HIPAA Compliant</span>
+        <span class="badge">Business Associate (BAA)</span>
+        <span class="badge">HL7 Standards</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
